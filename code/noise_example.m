@@ -131,6 +131,7 @@ for i = 1:length(imlist)
     ylabel('Ratio of maximum target to distractor salience');
     xlabel('Proportion of pixels affected by point noise');
     legend(models);
+    set(gcf, 'color', 'w');
     hold on
     plot([pointprops(1), pointprops(end)], [1,1], 'r:'); % add the error line
     
@@ -145,6 +146,7 @@ for i = 1:length(imlist)
     ylabel('Ratio of maximum target to distractor salience');
     xlabel('Size of blurring kernel sigma as a proportion of image major axis');
     legend(models);
+    set(gcf, 'color', 'w');
     hold on
     plot([blurprops(1), blurprops(end)], [1,1], 'r:'); % add the error line
     
