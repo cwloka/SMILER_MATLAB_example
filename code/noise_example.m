@@ -11,6 +11,12 @@ imlist = imlist(3:end); % hack to get rid of '..' and '.' elements
 % decide which saliency models we want to use
 models = {'AIM', 'FES', 'GBVS', 'IMSIG', 'RARE2012'};
 
+% convert those models into function handles so we can execute them
+modfun = cell(length(models),1);
+for i = 1:length(models)
+    modfun{i} = str2func([models{i}, '_wrap']);
+end
+
 % set up a SMILER parameter structure; note that this could be skipped if
 % we want to use only default values, but in this case we want to turn off
 % any explicit center biasing, because psychophysical search arrays are 
@@ -46,7 +52,7 @@ if(flag_save_examples)
 end
 
 %% Run the experiment
-% loop through the experiment images
+% loop through the experiment images and calculate the saliency maps
 for i = 1:length(imlist)
     img = im2double(imread(['../images/stimuli/', imlist(i).name]));
     targmap = imread(['../images/targmap/', imlist(i).name]);
@@ -65,7 +71,7 @@ for i = 1:length(imlist)
         
         % run saliency models
         for k = 1:length(models)
-            salmap = feval([models{k}, '_wrap'], testimg, params); % execute the kth model on the test image
+            salmap = modfun{k}(testimg, params); % execute the kth model on the test image
             point_results{k}(i,j) = maxrat(salmap, targmap, dil, distmap);
             
             if(flag_save_examples)
@@ -90,7 +96,7 @@ for i = 1:length(imlist)
         
         % run saliency models
         for k = 1:length(models)
-            salmap = feval([models{k}, '_wrap'], testimg, params); % execute the kth model on the test image
+            salmap = modfun{k}(testimg, params); % execute the kth model on the test image
             blur_results{k}(i,j) = maxrat(salmap, targmap, dil, distmap);
             
             if(flag_save_examples)
