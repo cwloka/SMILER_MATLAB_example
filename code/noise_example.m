@@ -118,6 +118,8 @@ colmat = [0, 0, 0.5; 0.5, 0, 0; 0, 0.7, 0; 0.7, 0, 0.7; 0, 0.4, 0.4];
 % for plot titles here are some hardcoded names for the images
 % note: this is a hack, and will break if you add more images
 imnames = {'shape search image', 'flipped human search image'};
+leg = models;
+leg{end+1} = 'error line';
 
 % loop through the models and plot each set of ratios
 for i = 1:length(imlist)
@@ -133,13 +135,14 @@ for i = 1:length(imlist)
         plot(blurprops, blur_results{j}(i,:), 'Color', colmat(j,:), 'LineWidth', 2)
     end
     figure(ph)
-    title(['The affect of point noise on target-distractor saliency ratios in the ', imnames{i}]);
-    ylabel('Ratio of maximum target to distractor salience');
-    xlabel('Proportion of pixels affected by point noise');
-    legend(models);
-    set(gcf, 'color', 'w');
     hold on
     plot([pointprops(1), pointprops(end)], [1,1], 'r:'); % add the error line
+    title(['The effect of point noise on target-distractor saliency ratios in the ', imnames{i}]);
+    ylabel('Ratio of maximum target to distractor salience');
+    xlabel('Proportion of pixels affected by point noise');
+    set(gcf, 'color', 'w');
+    set(gca, 'FontSize', 16);
+    legend(leg, 'location', 'eastoutside');
     
     % the next three lines are an undocumented hack in MATLAB to
     % automatically maximize the figures
@@ -148,13 +151,15 @@ for i = 1:length(imlist)
     set(frame_h, 'Maximized', 1);
     
     figure(bh)
-    title(['The affect of blurring noise on target-distractor saliency ratios in the ', imnames{i}]);
-    ylabel('Ratio of maximum target to distractor salience');
-    xlabel('Size of blurring kernel sigma as a proportion of image major axis');
-    legend(models);
-    set(gcf, 'color', 'w');
     hold on
     plot([blurprops(1), blurprops(end)], [1,1], 'r:'); % add the error line
+    title(['The effect of blurring noise on target-distractor saliency ratios in the ', imnames{i}]);
+    ylabel('Ratio of maximum target to distractor salience');
+    xlabel('Size of blurring kernel sigma as a proportion of image major axis');
+    legend(leg, 'location', 'eastoutside');
+    set(gcf, 'color', 'w');
+    set(gca, 'FontSize', 16);
+    
     
     % the next three lines are an undocumented hack in MATLAB to
     % automatically maximize the figures

@@ -28,6 +28,6 @@ Each test image is tested under one of two noise conditions with varying intensi
 
 This example organizes files into two subfolders: `images` and `code`.
 
-The `images` folder contains `stimuli` which provides the input images for the experiment, `distmap` which provides the binary distractor masks, and `targmap` which provides the binary target masks. If map logging is turned on, this folder will also contain a `maps` folder after the experiment is run which contains the output of the different saliency algorithms.
+The `images` folder contains `stimuli` which provides the input images for the experiment, `distmap` which provides the binary distractor masks, and `targmap` which provides the binary target masks. If map logging is turned on, this folder will also contain a `output` folder after the experiment is run which contains example output of the different saliency algorithms, as well as the corresponding noise-degraded images.
 
 The `code` folder contains all the MATLAB files necessary to conduct the experiment.
